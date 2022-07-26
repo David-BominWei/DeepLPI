@@ -9,4 +9,6 @@ A deep learning based drug target interaction prediction model
 
 + `preprocess0.py`: the data preprocessing file, run this to preprocess the original data.
 
-+ `molembedding1.py`: use to embedding molecular
++ `seqembedding1.py`: use to embedding molecular
+
+    + requirement: ProSE
