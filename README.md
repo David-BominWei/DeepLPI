@@ -3,7 +3,7 @@ A deep learning based drug target interaction prediction model
 
 ## file describtion
 
-+ `/notebook`: File inside this folder is the jupyter notebook (`.ipynb`) copy of the `.py` file. 
++ `/scipts`: File inside this folder is the jupyter notebook (`.py`) copy of the `.ipynb` file. 
 
 + `env.list`: environment file, the current enviroment for developing the model
 
