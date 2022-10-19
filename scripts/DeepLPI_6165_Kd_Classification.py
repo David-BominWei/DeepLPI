@@ -119,8 +119,8 @@ class DeepLPI(nn.Module):
             nn.ReLU(),
             nn.Dropout(p=0.2),
             
-            nn.Linear(32, 2),
-            nn.Softmax(dim=1)
+            nn.Linear(32, 1),
+            nn.Sigmoid()
         )
 
     def forward(self, mol, seq):
@@ -134,7 +134,7 @@ class DeepLPI(nn.Module):
         
         # fully connect layer
         x = self.mlp(x.flatten(1))
-        x = x[:,0]
+        x = x.flatten()
         
         return x
 
@@ -177,11 +177,12 @@ def train_loop(model, train_dataloader, lossfunc, optimizer, scheduler):
         
     with torch.no_grad():
         return loop_loss/len(train_dataloader)
-
+    
 from sklearn import metrics
 from mlxtend.plotting import plot_confusion_matrix
+from mlxtend.evaluate import confusion_matrix
 
-def test_loop(model, val_mol, val_seq, val_classify, epoch):
+def test_loop(model, val_mol, val_seq, val_classify, writer, epoch):
     model.eval()
     model = model.to("cuda")
     with torch.no_grad():
@@ -189,12 +190,17 @@ def test_loop(model, val_mol, val_seq, val_classify, epoch):
         logits = model(step_mol,step_seq)
     logits = logits.to("cpu")
 
-    return roc_auc_score(val_classify,logits), accuracy_score(val_classify>=0.5,logits>=1)
+    cm = confusion_matrix(val_classify==1,logits>=0.5)
+    fig, ax = plot_confusion_matrix(conf_mat=cm)
+    writer.add_figure(tag='test evaluate', figure=fig, global_step=epoch)
+
+    return roc_auc_score(val_classify,logits), accuracy_score(val_classify==1,logits>=0.5)
 
 import torch.optim as optim
 
 model = DeepLPI(300,6165)
 
+model.apply(initialize_weights)
 criterion = nn.CrossEntropyLoss()
 loss_fn = nn.BCELoss()
 optimizer = optim.AdamW(model.parameters(), lr=0.0002, weight_decay=0.0001)
@@ -213,7 +219,7 @@ for epoch in range(1000):
     time0 = time.time()
 
     avgloss = train_loop(model, trainDataLoader, loss_fn, optimizer, scheduler)
-    auroc, acc = test_loop(model, val_mol, val_seq, val_classify, epoch)
+    auroc, acc = test_loop(model, val_mol, val_seq, val_classify, writer, epoch)
 
     writer.add_scalar("test time", time.time()-time0, epoch)
     writer.add_scalar('avgloss', avgloss , epoch)
@@ -230,4 +236,3 @@ for epoch in range(1000):
         torch.save({'state_dict': model.state_dict()}, data_path + 'model/' + str(version) + "e" + str(epoch) + '.pth.tar')
     else:
         torch.save({'state_dict': model.state_dict()}, data_path + "model/quicksave.pth.tar")
-    
