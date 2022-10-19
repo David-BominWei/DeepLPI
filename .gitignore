@@ -2,3 +2,4 @@
 /prose
 /mol2vec
 nohup.out
+/output/tensorboard
