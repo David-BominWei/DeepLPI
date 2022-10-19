@@ -8,6 +8,8 @@ data_path = "/home/wbm001/deeplpi/DeepLPI/output/"
 RAMDOMSEED = 11
 CLASSIFYBOUND = -2
 
+print("start training DeepLPI 6165 kd classification")
+
 import pandas as pd
 
 seqembed = pd.read_csv(seqembed_path,header=None)
@@ -232,7 +234,7 @@ for epoch in range(1000):
     print("use time: " + str(time.time() - time0))
     
     model.eval()
-    if epoch % 50 == 1:
+    if epoch % 50 == 0:
         torch.save({'state_dict': model.state_dict()}, data_path + 'model/' + str(version) + "e" + str(epoch) + '.pth.tar')
     else:
         torch.save({'state_dict': model.state_dict()}, data_path + "model/quicksave.pth.tar")
