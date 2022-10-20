@@ -111,7 +111,7 @@ class DeepLPI(nn.Module):
         self.lstm = nn.LSTM(16, 16, num_layers=2, batch_first=True, bidirectional=True)
         
         self.mlp = nn.Sequential (
-            nn.Linear(17216, 1024),
+            nn.Linear(round(((300+6165)/4-2)*2/3) * 16, 1024),
             nn.BatchNorm1d(1024),
             nn.ReLU(),
             nn.Dropout(p=dropout),
@@ -133,7 +133,7 @@ class DeepLPI(nn.Module):
         x = torch.cat((mol,seq),2)
         x = self.pool(x)
         # print(x.shape)
-        x = x.reshape(-1,538,16)
+        x = x.reshape(-1,round(((self.molshape+self.seqshape)/4-2)/3),16)
 
         x,_ = self.lstm(x)
         # fully connect layer
