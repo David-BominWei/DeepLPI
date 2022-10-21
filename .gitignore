@@ -4,5 +4,4 @@
 /output/tensorboard
 /output/nohup
 
-/output/model/*50.pth.tar
-/output/model/*00.pth.tar
+/output/model/*0.pth.tar
