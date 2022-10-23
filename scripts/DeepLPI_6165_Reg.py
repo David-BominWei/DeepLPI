@@ -31,7 +31,7 @@ train_mol = tensor(np.array(molembed.loc[train["mol"]])).to(torch.float32)
 train_classify = tensor(np.array(train["pKd (nM)"])).to(torch.float32)
 
 trainDataset = TensorDataset(train_mol,train_seq,train_classify)
-trainDataLoader = DataLoader(trainDataset, batch_size=256)
+trainDataLoader = DataLoader(trainDataset, batch_size=64)
 
 #val
 val_seq = tensor(np.array(seqembed.loc[val["seq"]])).to(torch.float32)
