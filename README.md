@@ -29,6 +29,9 @@ A deep learning based drug target interaction prediction model
 
 ## updates
 
++ 2022/10/24
+    + building revision of `DeepLPI_6165_Reg.ipynb` and `DeepLPI_6165_Reg-Daviscp.ipynb`
+
 + 2022/10/21
     + rename `DeepLPI_6165kdCl_Evaluation.ipynb` -> `DeepLPI_6165_Bin_Evaluation.ipynb`
     + rename `DeepLPI_6165_Kd_Classification.ipynb` -> `DeepLPI_6165_Bin.ipynb`

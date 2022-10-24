@@ -1,8 +1,6 @@
 /data
 /prose
 /mol2vec
-/.ipynb_checkpoints
-/.vscode
 
 /output/tensorboard
 /output/nohup
