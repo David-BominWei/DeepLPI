@@ -3,31 +3,33 @@ A deep learning based drug target interaction prediction model
 
 ## file description
 
-+ `/scipts`: File inside this folder is the jupyter notebook (`.py`) copy of the `.ipynb` file. 
++ `Model/`: folder of all models
+    + `archive/`: archived models
+    + `notebook/`: notebook version of the models, used for testing.
+    + model files:
+        ```sh
+        $modelname + $mainversion + $subversion + "-" + $database + "-" + $mode
+        ```
 
-    + `/scripts/runtrainingDeepLPI6165.sh`: Run the training of the model. **NOTICE: It will remove the original model saved in `/output`**
++ `Evaluation/`: evaluation of the model
 
-+ `env.list`: environment file, the current environment for developing the model
++ `Preprocess/`: preprocessing of the model, plz follow the step.
 
-+ `step0_preprocess.ipynb`: the data preprocessing file, run this to preprocess the original data.
++ `output/`: data output
 
-+ `step1_molembedding.ipynb`: use to embedding molecular
-
-    + requirement: Mol2Vec
-
-+ `step2_seqembedding.ipynb`: use to embedding sequence
-
-    + requirement: ProSE
-
-+ `DeepLPI_6165_Bin.py`: The model training file, save the configuration and output in `/output` folder after training for 1000 epochs
-
-    + requirement: processed data
-
-+  `DeepLPI_6165_Bin_Evaluation.ipynb`: Evaluate the performance of the model, the file will also draw the necessary figures and save in `/output`
++ `env.list`: python environment requirement
 
 ## model description
 
++ `v9b0`: original version
++ `v9b1`: LSTM improved version
+
 ## updates
+
++ 2022/10/24
+    + `6165_reg_Revise` test fail => del
+        + move back to main without merge the branch
+    + reorganized the file(see file description)
 
 + 2022/10/21
     + rename `DeepLPI_6165kdCl_Evaluation.ipynb` -> `DeepLPI_6165_Bin_Evaluation.ipynb`
